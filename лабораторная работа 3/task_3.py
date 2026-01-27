@@ -61,4 +61,5 @@ letters = count_letters(main_str)
 freqs = calculate_frequency(letters)
 
 for letter in freqs:
-    print(f"{letter}: {freqs[letter]}")
+    freq_formatted = f"{freqs[letter]:.2f}"
+    print(f"{letter}: {freq_formatted}")
