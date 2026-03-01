@@ -178,9 +178,31 @@ class CelestialBody:
         pass
 
 
-# Конкретные реализации для тестирования (не требуются по заданию, но полезны для демонстрации)
+# Конкретные реализации для тестирования
 class ConcreteTable(Furniture):
-    """Конкретная реализация стола."""
+    """Конкретная реализация стола.
+
+    Примеры:
+    >>> table = ConcreteTable("Дуб", 25.0, "коричневый")
+    >>> table.get_volume()
+    0.05
+    >>> table.can_hold_weight(70)
+    True
+    >>> table.can_hold_weight(80)
+    False
+    >>> table.change_color("белый")
+    >>> table.color
+    'белый'
+    >>> # Проверка исключений
+    >>> table.can_hold_weight(-10)
+    Traceback (most recent call last):
+    ...
+    ValueError: Вес не может быть отрицательным
+    >>> ConcreteTable("", 10, "red")
+    Traceback (most recent call last):
+    ...
+    ValueError: Материал не может быть пустым
+    """
 
     def get_volume(self) -> float:
         return self.weight_kg / 500  # Упрощенный расчет
@@ -197,7 +219,28 @@ class ConcreteTable(Furniture):
 
 
 class ConcreteTree(Plant):
-    """Конкретная реализация дерева."""
+    """Конкретная реализация дерева.
+
+    Примеры:
+    >>> tree = ConcreteTree("Oak", 5.0, 10)
+    >>> tree.grow(5)
+    7.5
+    >>> tree.get_annual_growth()
+    0.5
+    >>> tree.is_deciduous()
+    True
+    >>> tree = ConcreteTree("Pine", 3.0, 5)
+    >>> tree.is_deciduous()
+    False
+    >>> tree.grow(-1)
+    Traceback (most recent call last):
+    ...
+    ValueError: Количество лет должно быть положительным
+    >>> ConcreteTree("", 1, 1)
+    Traceback (most recent call last):
+    ...
+    ValueError: Вид растения не может быть пустым
+    """
 
     def grow(self, years: int) -> float:
         if years <= 0:
@@ -218,7 +261,28 @@ class ConcreteTree(Plant):
 
 
 class ConcretePlanet(CelestialBody):
-    """Конкретная реализация планеты."""
+    """Конкретная реализация планеты.
+
+    Примеры:
+    >>> earth = ConcretePlanet("Earth", 5.97e24, 12742)
+    >>> round(earth.calculate_gravity(), 2)
+    9.8
+    >>> round(earth.get_volume(), 2)
+    1.08e12
+    >>> mars = ConcretePlanet("Mars", 6.39e23, 6779)
+    >>> earth.compare_size(mars)
+    'Earth больше, чем Mars'
+    >>> earth.compare_size(earth)
+    'Earth равен по размеру Earth'
+    >>> earth.calculate_gravity(-10)
+    Traceback (most recent call last):
+    ...
+    ValueError: Расстояние не может быть отрицательным
+    >>> ConcretePlanet("", 1, 1)
+    Traceback (most recent call last):
+    ...
+    ValueError: Название не может быть пустым
+    """
 
     G = 6.67430e-11  # Гравитационная постоянная
 
@@ -244,13 +308,11 @@ class ConcretePlanet(CelestialBody):
 
 
 if __name__ == "__main__":
-    # Примеры использования
+    # Запуск doctest
     doctest.testmod(verbose=True)
 
-    # Демонстрация работы
-    print("docktest:\n")
-
-    # Мебель
+    # Демонстрация работы (необязательно)
+    print("\nДемонстрация работы:\n")
     try:
         table = ConcreteTable("Дуб", 25.0, "коричневый")
         print(f"Стол: материал={table.material}, вес={table.weight_kg}кг, цвет={table.color}")
